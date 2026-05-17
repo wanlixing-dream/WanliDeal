@@ -1,2 +1,17 @@
 # Reference source code (not part of this project)
 .reference/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.db
+
+# Environment
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp

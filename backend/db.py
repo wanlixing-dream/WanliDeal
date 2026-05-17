@@ -6,6 +6,7 @@ from typing import Optional
 
 from sqlalchemy import Column, DateTime, Float, Integer, String, Text, create_engine
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
+from sqlalchemy.pool import StaticPool
 
 from .config import settings
 
@@ -35,7 +36,12 @@ class DealCardRow(Base):
     last_checked = Column(DateTime, nullable=True)
 
 
-engine = create_engine(settings.database_url, echo=settings.debug)
+_engine_kwargs = {"echo": settings.debug}
+if settings.database_url == "sqlite:///" or ":memory:" in settings.database_url:
+    _engine_kwargs["connect_args"] = {"check_same_thread": False}
+    _engine_kwargs["poolclass"] = StaticPool
+
+engine = create_engine(settings.database_url, **_engine_kwargs)
 
 
 def init_db():

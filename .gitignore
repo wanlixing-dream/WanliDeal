@@ -11,6 +11,10 @@ __pycache__/
 # Environment
 .env
 
+# Node
+node_modules/
+dist/
+
 # IDE
 .idea/
 .vscode/
